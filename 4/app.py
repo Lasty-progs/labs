@@ -14,7 +14,6 @@ conn = psycopg2.connect(
 
 cursor = conn.cursor()
 
-
 @app.route('/login/',methods=['GET'])
 def index():
     return render_template('login.html')
