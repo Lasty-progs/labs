@@ -22,7 +22,12 @@ def index():
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
+    if username == '' or password == '':
+        return render_template("empty_login.html")
     cursor.execute("SELECT * FROM service.users WHERE login=\'{0}\' AND password=\'{1}\'".format(str(username), str(password)))
     records = list(cursor.fetchall())
 
-    return render_template("account.html", full_name=records[0][1])
+    if records == []:
+        return render_template("account_not_exists.html")
+
+    return render_template("account.html", full_name=records[0][1], username= records[0][2], password= records[0][3])
