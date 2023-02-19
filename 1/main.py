@@ -4,6 +4,7 @@ c = int(input())
 
 d = b**2 - 4*a*c
 
+
 if d < 0:
     print("нет корней")
 elif d == 0:
