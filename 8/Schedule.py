@@ -125,8 +125,10 @@ class Schedule(QWidget):
                 self.days_tables[day].item(row, 2).text(),
                 self.days_tables[day].item(row, 3).text()]
         try:
-            self.cursor.execute(f"INSERT INTO timetable (subject, day, room_numb, start_time, week)\
-                                VALUES ('{data[0]}', '{self.days[day]}', {data[1]}, '{data[2]}', {self.week})")
+            self.cursor.execute("SELECT max(id) FROM timetable")
+            self.rec = self.cursor.fetchall()
+            self.cursor.execute(f"INSERT INTO timetable (id, subject, day, room_numb, start_time, week)\
+                                VALUES ({self.rec[0][0] + 1} ,'{data[0]}', '{self.days[day]}', {data[1]}, '{data[2]}', '{self.week}')")
             self.conn.commit()
         except BaseException as E:
             QMessageBox.about(self, "Error", str(E))
